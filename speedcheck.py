@@ -1,5 +1,6 @@
 import datetime
 import json
+import os
 import pytz
 import speedtest
 
@@ -23,6 +24,12 @@ entry = {
     'protocol': res,
 }
 
-print(json.dumps(entry, indent=4))
-logfile = str(dt.year) + str(dt.month) + '.log'
-print (logfile)
+logfile = '/home/pi/logs/' + str(dt.year) + str(dt.month) + '.log'
+if (os.path.exists(logfile)):
+	mode = 'a'
+else:
+	mode = 'w'
+with open(logfile, mode) as myfile:
+    myfile.write(json.dumps(entry, indent=4))
+    myfile.write(',\n')
+
